@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3hqd31xvie3d"]
+
+[ext_resource type="Script" uid="uid://cx056uu2d5e0u" path="res://Scenes/hazzard.gd" id="1_pk26u"]
+[ext_resource type="PackedScene" uid="uid://vt4lf7o08mcc" path="res://explosion.tscn" id="2_kmc7p"]
+[ext_resource type="Texture2D" uid="uid://d3plaffsqm5tk" path="res://assets/images/Bomb.png" id="2_o1r85"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kmc7p"]
+radius = 12.0
+
+[node name="Hazard" type="Area2D"]
+scale = Vector2(1.5, 1.5)
+collision_layer = 4
+script = ExtResource("1_pk26u")
+explosion_scene = ExtResource("2_kmc7p")
+
+[node name="Bomb" type="Sprite2D" parent="."]
+texture = ExtResource("2_o1r85")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kmc7p")
+
+[node name="Explosion" type="Sprite2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
