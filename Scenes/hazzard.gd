@@ -32,4 +32,5 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	triggered = true
 	spawn_explosion()
+	get_tree().current_scene.trigger_game_over() #if get hit = game over
 	queue_free()
