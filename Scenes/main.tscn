@@ -106,12 +106,12 @@ script = ExtResource("4_jjvhh")
 hazard_scene = ExtResource("3_8gbba")
 
 [node name="LeftSpawner" type="Marker2D" parent="UI/HazardSpawner"]
-position = Vector2(50, 0)
+position = Vector2(234, 0)
 
 [node name="RightSpawner" type="Marker2D" parent="UI/HazardSpawner"]
-position = Vector2(750, 0)
+position = Vector2(995, 0)
 
-[node name="Timer" type="Timer" parent="UI/HazardSpawner"]
+[node name="SpawnerTimer" type="Timer" parent="UI/HazardSpawner"]
 wait_time = 1.5
 autostart = true
 
@@ -154,4 +154,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[connection signal="timeout" from="UI/HazardSpawner/Timer" to="UI/HazardSpawner" method="_on_timer_timeout"]
+[connection signal="timeout" from="UI/HazardSpawner/SpawnerTimer" to="UI/HazardSpawner" method="_on_timer_timeout"]

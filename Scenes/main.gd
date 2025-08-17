@@ -1,9 +1,11 @@
 extends Node2D
 
+@onready var spawner := $UI/HazardSpawner
 @onready var game_over_label = $UI_Layer/GameOver   # get the label
 @onready var game_over_overlay = $UI_Layer/ColorRect # optional dark overlay
 var is_game_over := false                            # one-time latch
 var elapsed_time = 0.0
+var next_ramp_time = 10
 
 
 func trigger_game_over() -> void:
@@ -32,3 +34,5 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta):
 	elapsed_time += delta
 	get_node("HUD/TimeLabel").text = "Time: " + ("%0.1f" % elapsed_time) + "s"
+	if elapsed_time >= next_ramp_time:
+		spawner.spawn_wait = max(0.5, spawner.spawn_wait - 0.15)
