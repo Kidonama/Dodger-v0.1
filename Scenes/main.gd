@@ -3,6 +3,8 @@ extends Node2D
 @onready var game_over_label = $UI_Layer/GameOver   # get the label
 @onready var game_over_overlay = $UI_Layer/ColorRect # optional dark overlay
 var is_game_over := false                            # one-time latch
+var elapsed_time = 0.0
+
 
 func trigger_game_over() -> void:
 	# if we already ended, do nothing
@@ -26,3 +28,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_R:
 			Engine.time_scale = 1.0                  # << restore normal time
 			get_tree().reload_current_scene()        # hard reset the scene
+
+func _process(delta):
+	elapsed_time += delta
+	get_node("HUD/TimeLabel").text = "Time: " + ("%0.1f" % elapsed_time) + "s"
