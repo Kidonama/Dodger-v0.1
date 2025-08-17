@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://vt4lf7o08mcc"]
 
-[ext_resource type="Script" uid="uid://cdg0m5gpgoxs3" path="res://explosion.gd" id="1_vxas0"]
+[ext_resource type="Script" uid="uid://cdg0m5gpgoxs3" path="res://scripts/explosion.gd" id="1_vxas0"]
 [ext_resource type="Texture2D" uid="uid://ct7n5piadh207" path="res://assets/images/explosuion.png" id="2_j4sxf"]
 [ext_resource type="Gradient" uid="uid://dv101yq7ihrsa" path="res://explosion.tres" id="3_j4sxf"]
 [ext_resource type="AudioStream" uid="uid://c5dtfbtah55gr" path="res://assets/sfx/Boom8.wav" id="4_m5xho"]

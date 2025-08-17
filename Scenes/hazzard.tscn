@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3hqd31xvie3d"]
 
-[ext_resource type="Script" uid="uid://cx056uu2d5e0u" path="res://Scenes/hazzard.gd" id="1_pk26u"]
+[ext_resource type="Script" uid="uid://cx056uu2d5e0u" path="res://scripts/hazzard.gd" id="1_pk26u"]
 [ext_resource type="PackedScene" uid="uid://vt4lf7o08mcc" path="res://explosion.tscn" id="2_kmc7p"]
 [ext_resource type="Texture2D" uid="uid://d3plaffsqm5tk" path="res://assets/images/Bomb.png" id="2_o1r85"]
 

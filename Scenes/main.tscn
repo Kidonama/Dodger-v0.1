@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bnagkyfue6hh1"]
+[gd_scene load_steps=12 format=3 uid="uid://bnagkyfue6hh1"]
 
 [ext_resource type="Script" uid="uid://j00iyaa7y434" path="res://scripts/player.gd" id="1_bo1nx"]
-[ext_resource type="Script" uid="uid://bp4yu26260mkk" path="res://Scenes/main.gd" id="1_kry3j"]
+[ext_resource type="Script" uid="uid://bp4yu26260mkk" path="res://scripts/main.gd" id="1_kry3j"]
 [ext_resource type="Texture2D" uid="uid://6f80b7i25pgu" path="res://assets/New Piskel-1.png.png" id="2_8gbba"]
 [ext_resource type="PackedScene" uid="uid://c3hqd31xvie3d" path="res://Scenes/hazzard.tscn" id="3_8gbba"]
 [ext_resource type="Script" uid="uid://bm4l2gitd50he" path="res://Scenes/hazard_spawner.gd" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://b37me7m5baxou" path="res://Scenes/banana.tscn" id="6_6bp64"]
 [ext_resource type="AudioStream" uid="uid://dh4g0rkaipxg" path="res://assets/sfx/gameover.wav" id="6_21xkr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
@@ -19,7 +20,7 @@ size = Vector2(1500, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(22, 21)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" groups=["Game"]]
 process_mode = 3
 script = ExtResource("1_kry3j")
 
@@ -91,9 +92,9 @@ pivot_offset = Vector2(8, 8)
 text = " DEBUG OK"
 metadata/_edit_use_anchors_ = true
 
-[node name="Player" type="CharacterBody2D" parent="UI"]
+[node name="Player" type="CharacterBody2D" parent="UI" groups=["Player"]]
 process_mode = 1
-position = Vector2(576, 324)
+position = Vector2(580, 662)
 collision_mask = 2
 script = ExtResource("1_bo1nx")
 
@@ -108,12 +109,16 @@ shape = SubResource("RectangleShape2D_0xm2m")
 [node name="HazardSpawner" type="Node2D" parent="UI"]
 script = ExtResource("4_jjvhh")
 hazard_scene = ExtResource("3_8gbba")
+banana_scene = ExtResource("6_6bp64")
 
 [node name="LeftSpawner" type="Marker2D" parent="UI/HazardSpawner"]
 position = Vector2(234, 0)
 
 [node name="RightSpawner" type="Marker2D" parent="UI/HazardSpawner"]
 position = Vector2(995, 0)
+
+[node name="CenterSpawner" type="Marker2D" parent="UI/HazardSpawner"]
+position = Vector2(583, -1)
 
 [node name="SpawnerTimer" type="Timer" parent="UI/HazardSpawner"]
 wait_time = 1.5
@@ -153,13 +158,36 @@ offset_left = 0.287964
 offset_top = 0.264
 offset_right = -0.264038
 offset_bottom = -0.064003
-grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 1
 text = "Time:0.0s"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.86966
+anchor_top = 0.111
+anchor_right = 0.974104
+anchor_bottom = 0.493988
+offset_left = 0.151978
+offset_top = 0.071991
+offset_right = -0.168091
+offset_bottom = -0.104004
+theme_override_constants/separation = 16
 metadata/_edit_use_anchors_ = true
+
+[node name="ScoreLabel" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighLabel" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "High: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GameOverSFX" type="AudioStreamPlayer2D" parent="."]
 process_mode = 2
