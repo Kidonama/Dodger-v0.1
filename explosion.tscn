@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://vt4lf7o08mcc"]
+[gd_scene load_steps=5 format=3 uid="uid://vt4lf7o08mcc"]
 
 [ext_resource type="Script" uid="uid://cdg0m5gpgoxs3" path="res://explosion.gd" id="1_vxas0"]
 [ext_resource type="Texture2D" uid="uid://ct7n5piadh207" path="res://assets/images/explosuion.png" id="2_j4sxf"]
+[ext_resource type="Gradient" uid="uid://dv101yq7ihrsa" path="res://explosion.tres" id="3_j4sxf"]
+[ext_resource type="AudioStream" uid="uid://c5dtfbtah55gr" path="res://assets/sfx/Boom8.wav" id="4_m5xho"]
 
 [node name="Explosion" type="Node2D"]
+process_mode = 3
 scale = Vector2(2, 2)
 script = ExtResource("1_vxas0")
 
@@ -11,8 +14,33 @@ script = ExtResource("1_vxas0")
 texture = ExtResource("2_j4sxf")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.3
+process_mode = 2
+wait_time = 0.7
 one_shot = true
 autostart = true
+ignore_time_scale = true
+
+[node name="ExplosionParticles" type="CPUParticles2D" parent="."]
+process_mode = 2
+z_index = 100
+emitting = false
+amount = 60
+lifetime = 0.5
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 120.0
+initial_velocity_max = 220.0
+damping_min = 10.0
+damping_max = 14.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+color_ramp = ExtResource("3_j4sxf")
+metadata/_edit_group_ = true
+
+[node name="ExplosionSFX" type="AudioStreamPlayer2D" parent="."]
+process_mode = 2
+stream = ExtResource("4_m5xho")
+volume_db = -6.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

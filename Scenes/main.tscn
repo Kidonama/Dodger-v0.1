@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnagkyfue6hh1"]
+[gd_scene load_steps=11 format=3 uid="uid://bnagkyfue6hh1"]
 
 [ext_resource type="Script" uid="uid://j00iyaa7y434" path="res://scripts/player.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://bp4yu26260mkk" path="res://Scenes/main.gd" id="1_kry3j"]
 [ext_resource type="Texture2D" uid="uid://6f80b7i25pgu" path="res://assets/New Piskel-1.png.png" id="2_8gbba"]
 [ext_resource type="PackedScene" uid="uid://c3hqd31xvie3d" path="res://Scenes/hazzard.tscn" id="3_8gbba"]
 [ext_resource type="Script" uid="uid://bm4l2gitd50he" path="res://Scenes/hazard_spawner.gd" id="4_jjvhh"]
+[ext_resource type="AudioStream" uid="uid://dh4g0rkaipxg" path="res://assets/sfx/gameover.wav" id="6_21xkr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(32, 700)
@@ -53,8 +54,10 @@ position = Vector2(724, 690)
 shape = SubResource("RectangleShape2D_lquwl")
 
 [node name="UI" type="CanvasLayer" parent="."]
+process_mode = 1
 
 [node name="Hazard" parent="UI" instance=ExtResource("3_8gbba")]
+process_mode = 1
 z_index = 1
 position = Vector2(400, 80)
 
@@ -89,6 +92,7 @@ text = " DEBUG OK"
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" type="CharacterBody2D" parent="UI"]
+process_mode = 1
 position = Vector2(576, 324)
 collision_mask = 2
 script = ExtResource("1_bo1nx")
@@ -116,6 +120,7 @@ wait_time = 1.5
 autostart = true
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
+process_mode = 2
 
 [node name="GameOver" type="Label" parent="UI_Layer"]
 visible = false
@@ -135,8 +140,10 @@ text = "GAME OVER
 "
 
 [node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 1
 
 [node name="TimeLabel" type="Label" parent="HUD"]
+process_mode = 1
 anchors_preset = -1
 anchor_left = 0.869542
 anchor_top = 0.032
@@ -153,5 +160,10 @@ text = "Time:0.0s"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="GameOverSFX" type="AudioStreamPlayer2D" parent="."]
+process_mode = 2
+stream = ExtResource("6_21xkr")
+volume_db = -8.0
 
 [connection signal="timeout" from="UI/HazardSpawner/SpawnerTimer" to="UI/HazardSpawner" method="_on_timer_timeout"]
