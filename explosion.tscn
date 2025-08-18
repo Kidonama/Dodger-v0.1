@@ -11,6 +11,8 @@ scale = Vector2(2, 2)
 script = ExtResource("1_vxas0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3.75, 4.25)
+scale = Vector2(2, 2.052)
 texture = ExtResource("2_j4sxf")
 
 [node name="Timer" type="Timer" parent="."]

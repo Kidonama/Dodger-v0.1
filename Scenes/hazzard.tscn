@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://d3plaffsqm5tk" path="res://assets/images/Bomb.png" id="2_o1r85"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kmc7p"]
-radius = 12.0
+radius = 21.3437
 
 [node name="Hazard" type="Area2D"]
 scale = Vector2(1.5, 1.5)
@@ -14,11 +14,19 @@ script = ExtResource("1_pk26u")
 explosion_scene = ExtResource("2_kmc7p")
 
 [node name="Bomb" type="Sprite2D" parent="."]
+position = Vector2(3.33333, 8)
+scale = Vector2(2.438, 2)
 texture = ExtResource("2_o1r85")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 0)
 shape = SubResource("CircleShape2D_kmc7p")
 
 [node name="Explosion" type="Sprite2D" parent="."]
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(4, 1.33333)
+scale = Vector2(1.81667, 1.65)
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

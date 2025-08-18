@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://07j464h7hss4"]
+
+[ext_resource type="Script" uid="uid://o5tbj6g8hcwl" path="res://player.gd" id="1_he80n"]
+[ext_resource type="Texture2D" uid="uid://d3plaffsqm5tk" path="res://assets/images/Bomb.png" id="2_pahte"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6twh"]
+size = Vector2(69, 60)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_he80n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(129, 472)
+scale = Vector2(2.65625, 2.75)
+texture = ExtResource("2_pahte")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(128, 467)
+shape = SubResource("RectangleShape2D_r6twh")
