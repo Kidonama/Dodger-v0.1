@@ -13,8 +13,8 @@ func _on_body_entered(body: Node2D) -> void:
 		emit_signal("collected", 10)          # update score immediately
 		$PickupSFX.play()                     # play sfx
 
-		monitoring = false                    # stop further overlaps
-		$CollisionShape2D.disabled = true     # disable collisions
+		set_deferred("monitoring", false)                 # stop further overlaps
+		$CollisionShape2D.set_deferred("disabled", true)     # disable collisions
 		$Sprite2D.visible = false             # hide banana so it doesn’t clip through
 		await get_tree().create_timer(0.25).timeout
 		queue_free()
