@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var game_over_sfx := $GameOverSFX
-@onready var spawner := $UI/HazardSpawner
+@onready var spawner := $GameLayer/HazardSpawner
 @onready var game_over_label = $UI_Layer/GameOver   # get the label
 @onready var game_over_overlay = $UI_Layer/GameOver # optional dark overlay
 var is_game_over := false                            # one-time latch
@@ -30,8 +30,8 @@ func _load_high_score() -> void:
 
 
 func _update_score_labels() -> void:
-	get_node("HUD/VBoxContainer/ScoreLabel").text = "Score: %d" % score
-	get_node("HUD/VBoxContainer/HighLabel").text  = "High: %d" % high_score
+	get_node("HUD_Layer/HUD/VBoxContainer/ScoreLabel").text = "Score: %d" % score
+	get_node("HUD_Layer/HUD/VBoxContainer/HighLabel").text  = "High: %d" % high_score
 
 func _add_score(points:int) -> void:
 	if get_tree().paused:
@@ -83,7 +83,7 @@ func _process(delta):
 		return  # do not advance time or ramp while paused
 
 	elapsed_time += delta
-	get_node("HUD/TimeLabel").text = "Time: " + ("%0.1f" % elapsed_time) + "s"
+	get_node("HUD_Layer/HUD/TimeLabel").text = "Time: " + ("%0.1f" % elapsed_time) + "s"
 
 	if elapsed_time >= next_ramp_time:
 		spawner.spawn_wait = max(0.5, spawner.spawn_wait - 0.15)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://btibensrhe7dw"]
+
+[ext_resource type="Script" uid="uid://6b6du2uyrodb" path="res://Scenes/spawner.gd" id="1_fgtb1"]
+[ext_resource type="PackedScene" uid="uid://c3hqd31xvie3d" path="res://Scenes/hazzard.tscn" id="2_qpq3h"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("1_fgtb1")
+hazard_scene = ExtResource("2_qpq3h")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.2
+autostart = true
+
+[connection signal="timeout" from="Timer" to="Spawner" method="_on_timer_timeout"]

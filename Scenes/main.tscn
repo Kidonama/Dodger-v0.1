@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://b37me7m5baxou" path="res://Scenes/banana.tscn" id="6_6bp64"]
 [ext_resource type="AudioStream" uid="uid://dh4g0rkaipxg" path="res://assets/sfx/gameover.wav" id="6_21xkr"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(45, 39)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
 size = Vector2(32, 700)
 
@@ -18,118 +21,132 @@ size = Vector2(1400, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
 size = Vector2(1500, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
-size = Vector2(45, 39)
-
-[node name="Main" type="Node2D" groups=["Game"]]
+[node name="World" type="Node2D" groups=["Game"]]
 process_mode = 3
 script = ExtResource("1_kry3j")
 
-[node name="Walls" type="Node2D" parent="."]
-
-[node name="WallLeft" type="StaticBody2D" parent="Walls"]
-collision_layer = 2
-
-[node name="Left" type="CollisionShape2D" parent="Walls/WallLeft"]
-position = Vector2(10, 324)
-shape = SubResource("RectangleShape2D_h2yge")
-
-[node name="WallRight" type="StaticBody2D" parent="Walls"]
-collision_layer = 2
-
-[node name="Right" type="CollisionShape2D" parent="Walls/WallRight"]
-position = Vector2(1185, 321)
-shape = SubResource("RectangleShape2D_h2yge")
-
-[node name="WallTop" type="StaticBody2D" parent="Walls"]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallTop"]
-position = Vector2(546, 15)
-shape = SubResource("RectangleShape2D_1bvp3")
-
-[node name="WallDown" type="StaticBody2D" parent="Walls"]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallDown"]
-position = Vector2(724, 690)
-shape = SubResource("RectangleShape2D_lquwl")
-
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="GameLayer" type="Node2D" parent="."]
 process_mode = 1
 
-[node name="Hazard" parent="UI" instance=ExtResource("3_8gbba")]
-process_mode = 1
-z_index = 1
-position = Vector2(400, 80)
-
-[node name="Control" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="UI/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.347817, 0.347817, 0.347817, 1)
-
-[node name="Label" type="Label" parent="UI/Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0208333
-anchor_top = 0.0324074
-anchor_right = 0.0953056
-anchor_bottom = 0.0724074
-offset_right = 0.208
-offset_bottom = 1.08
-pivot_offset = Vector2(8, 8)
-text = " DEBUG OK"
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="UI/Control"]
+[node name="Sprite2D(Background)" type="Sprite2D" parent="GameLayer"]
 position = Vector2(579, 294)
 scale = Vector2(1.27778, 0.782222)
 texture = ExtResource("3_344ge")
 
-[node name="Player" type="CharacterBody2D" parent="UI" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" parent="GameLayer" groups=["Player"]]
 process_mode = 1
 position = Vector2(500, 302)
 collision_mask = 2
 script = ExtResource("1_bo1nx")
 
-[node name="Sprite2D" type="Sprite2D" parent="UI/Player"]
+[node name="Sprite2D" type="Sprite2D" parent="GameLayer/Player"]
 position = Vector2(85, 113)
 scale = Vector2(2.07, 1.79)
 texture = ExtResource("5_ynf5e")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Player"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameLayer/Player"]
 position = Vector2(56.5, 98.5)
 shape = SubResource("RectangleShape2D_0xm2m")
 
-[node name="HazardSpawner" type="Node2D" parent="UI"]
+[node name="HazardSpawner" type="Node2D" parent="GameLayer"]
+process_mode = 1
 script = ExtResource("4_jjvhh")
 hazard_scene = ExtResource("3_8gbba")
 banana_scene = ExtResource("6_6bp64")
 
-[node name="LeftSpawner" type="Marker2D" parent="UI/HazardSpawner"]
+[node name="LeftSpawner" type="Marker2D" parent="GameLayer/HazardSpawner"]
 position = Vector2(234, 0)
 
-[node name="RightSpawner" type="Marker2D" parent="UI/HazardSpawner"]
+[node name="RightSpawner" type="Marker2D" parent="GameLayer/HazardSpawner"]
 position = Vector2(995, 0)
 
-[node name="CenterSpawner" type="Marker2D" parent="UI/HazardSpawner"]
+[node name="CenterSpawner" type="Marker2D" parent="GameLayer/HazardSpawner"]
 position = Vector2(583, -1)
 
-[node name="SpawnerTimer" type="Timer" parent="UI/HazardSpawner"]
+[node name="SpawnerTimer" type="Timer" parent="GameLayer/HazardSpawner"]
 wait_time = 1.5
 autostart = true
+
+[node name="Hazard" parent="GameLayer" instance=ExtResource("3_8gbba")]
+z_index = 1
+position = Vector2(400, 80)
+
+[node name="Walls" type="Node2D" parent="GameLayer"]
+
+[node name="WallLeft" type="StaticBody2D" parent="GameLayer/Walls"]
+collision_layer = 2
+
+[node name="Left" type="CollisionShape2D" parent="GameLayer/Walls/WallLeft"]
+position = Vector2(10, 324)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="WallRight" type="StaticBody2D" parent="GameLayer/Walls"]
+collision_layer = 2
+
+[node name="Right" type="CollisionShape2D" parent="GameLayer/Walls/WallRight"]
+position = Vector2(1185, 321)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="WallTop" type="StaticBody2D" parent="GameLayer/Walls"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameLayer/Walls/WallTop"]
+position = Vector2(546, 15)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="WallDown" type="StaticBody2D" parent="GameLayer/Walls"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameLayer/Walls/WallDown"]
+position = Vector2(724, 690)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="HUD_Layer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="HUD_Layer"]
+process_mode = 1
+
+[node name="TimeLabel" type="Label" parent="HUD_Layer/HUD"]
+process_mode = 1
+anchors_preset = -1
+anchor_left = 0.869542
+anchor_top = 0.032
+anchor_right = 0.982
+anchor_bottom = 0.109667
+offset_left = 0.287964
+offset_top = 0.264
+offset_right = -0.264038
+offset_bottom = -0.064003
+size_flags_horizontal = 8
+size_flags_vertical = 1
+text = "Time:0.0s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD_Layer/HUD"]
+anchors_preset = -1
+anchor_left = 0.86966
+anchor_top = 0.111
+anchor_right = 0.974104
+anchor_bottom = 0.493988
+offset_left = 0.151978
+offset_top = 0.071991
+offset_right = -0.168091
+offset_bottom = -0.104004
+theme_override_constants/separation = 16
+metadata/_edit_use_anchors_ = true
+
+[node name="ScoreLabel" type="Label" parent="HUD_Layer/HUD/VBoxContainer"]
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighLabel" type="Label" parent="HUD_Layer/HUD/VBoxContainer"]
+layout_mode = 2
+text = "High: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 process_mode = 2
@@ -151,54 +168,9 @@ theme_override_font_sizes/font_size = 30
 text = "GAME OVER
 "
 
-[node name="HUD" type="CanvasLayer" parent="."]
-process_mode = 1
-
-[node name="TimeLabel" type="Label" parent="HUD"]
-process_mode = 1
-anchors_preset = -1
-anchor_left = 0.869542
-anchor_top = 0.032
-anchor_right = 0.982
-anchor_bottom = 0.109667
-offset_left = 0.287964
-offset_top = 0.264
-offset_right = -0.264038
-offset_bottom = -0.064003
-size_flags_horizontal = 8
-size_flags_vertical = 1
-text = "Time:0.0s"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD"]
-anchors_preset = -1
-anchor_left = 0.86966
-anchor_top = 0.111
-anchor_right = 0.974104
-anchor_bottom = 0.493988
-offset_left = 0.151978
-offset_top = 0.071991
-offset_right = -0.168091
-offset_bottom = -0.104004
-theme_override_constants/separation = 16
-metadata/_edit_use_anchors_ = true
-
-[node name="ScoreLabel" type="Label" parent="HUD/VBoxContainer"]
-layout_mode = 2
-text = "Score: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HighLabel" type="Label" parent="HUD/VBoxContainer"]
-layout_mode = 2
-text = "High: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="GameOverSFX" type="AudioStreamPlayer2D" parent="."]
 process_mode = 2
 stream = ExtResource("6_21xkr")
 volume_db = -8.0
 
-[connection signal="timeout" from="UI/HazardSpawner/SpawnerTimer" to="UI/HazardSpawner" method="_on_timer_timeout"]
+[connection signal="timeout" from="GameLayer/HazardSpawner/SpawnerTimer" to="GameLayer/HazardSpawner" method="_on_timer_timeout"]
