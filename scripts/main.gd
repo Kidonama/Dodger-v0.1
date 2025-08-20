@@ -4,6 +4,7 @@ extends Node2D
 @onready var spawner := $GameLayer/HazardSpawner
 @onready var game_over_label = $UI_Layer/GameOver   # get the label
 @onready var game_over_overlay = $UI_Layer/GameOver # optional dark overlay
+@onready var restart_game = $UI_Layer/Button
 var is_game_over := false                            # one-time latch
 var elapsed_time = 0.0
 var next_ramp_time = 10
@@ -53,6 +54,7 @@ func trigger_game_over() -> void:
 	# show UI (no special process modes needed)
 	if game_over_overlay: game_over_overlay.visible = true
 	game_over_label.visible = true
+	restart_game.visible = true
 	game_over_sfx.play()
 	get_tree().paused = true #Pauses not frezes
 
@@ -88,3 +90,10 @@ func _process(delta):
 	if elapsed_time >= next_ramp_time:
 		spawner.spawn_wait = max(0.5, spawner.spawn_wait - 0.15)
 		next_ramp_time += 10
+
+
+func _on_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()        
+	score = 0
+	

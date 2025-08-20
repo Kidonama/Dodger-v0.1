@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnagkyfue6hh1"]
+[gd_scene load_steps=17 format=3 uid="uid://bnagkyfue6hh1"]
 
 [ext_resource type="Script" uid="uid://j00iyaa7y434" path="res://scripts/player.gd" id="1_bo1nx"]
 [ext_resource type="Script" uid="uid://bp4yu26260mkk" path="res://scripts/main.gd" id="1_kry3j"]
@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://00k5vngd255w" path="res://assets/images/New Piskel-1.png (3).png" id="5_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://b37me7m5baxou" path="res://Scenes/banana.tscn" id="6_6bp64"]
 [ext_resource type="AudioStream" uid="uid://dh4g0rkaipxg" path="res://assets/sfx/gameover.wav" id="6_21xkr"]
+[ext_resource type="Texture2D" uid="uid://caa4tmpco0e18" path="res://assets/images/New Piskel-1.png (4).png" id="8_ynf5e"]
+[ext_resource type="Texture2D" uid="uid://dwugp0hrtge1y" path="res://assets/images/New Piskel-1.png (7)-1.png" id="9_6iyac"]
+[ext_resource type="Texture2D" uid="uid://dteakni3rexjo" path="res://assets/images/New Piskel-1.png (5).png" id="9_hptm8"]
+[ext_resource type="Texture2D" uid="uid://do5uxpaa0ahbt" path="res://assets/images/New Piskel-1.png (6).png" id="11_fdnlq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(45, 39)
@@ -25,17 +29,23 @@ size = Vector2(1500, 32)
 process_mode = 3
 script = ExtResource("1_kry3j")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Sprite2D(Background)" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_344ge")
+
 [node name="GameLayer" type="Node2D" parent="."]
 process_mode = 1
 
-[node name="Sprite2D(Background)" type="Sprite2D" parent="GameLayer"]
-position = Vector2(579, 294)
-scale = Vector2(1.27778, 0.782222)
-texture = ExtResource("3_344ge")
-
 [node name="Player" type="CharacterBody2D" parent="GameLayer" groups=["Player"]]
 process_mode = 1
-position = Vector2(500, 302)
+position = Vector2(509, 368)
 collision_mask = 2
 script = ExtResource("1_bo1nx")
 
@@ -103,6 +113,43 @@ shape = SubResource("RectangleShape2D_lquwl")
 
 [node name="HUD_Layer" type="CanvasLayer" parent="."]
 
+[node name="Right_HBoxContainer" type="HBoxContainer" parent="HUD_Layer"]
+anchors_preset = -1
+anchor_left = 0.798264
+anchor_top = 0.782568
+anchor_right = 1.0
+anchor_bottom = 1.03858
+offset_left = 0.399963
+offset_top = -0.104004
+grow_horizontal = 0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="RightButton" type="TouchScreenButton" parent="HUD_Layer/Right_HBoxContainer"]
+modulate = Color(1, 1, 1, 0.627451)
+scale = Vector2(3, 3)
+texture_normal = ExtResource("8_ynf5e")
+texture_pressed = ExtResource("9_6iyac")
+action = "ui_right"
+
+[node name="Left_HBoxContainer" type="HBoxContainer" parent="HUD_Layer"]
+anchors_preset = -1
+anchor_top = 0.782
+anchor_right = 0.201
+anchor_bottom = 1.039
+offset_top = 0.263947
+offset_right = 0.447998
+offset_bottom = -0.272034
+grow_vertical = 0
+
+[node name="LeftButton" type="TouchScreenButton" parent="HUD_Layer/Left_HBoxContainer"]
+modulate = Color(1, 1, 1, 0.627451)
+position = Vector2(40, 0)
+scale = Vector2(3, 3)
+texture_normal = ExtResource("9_hptm8")
+texture_pressed = ExtResource("11_fdnlq")
+action = "ui_left"
+
 [node name="HUD" type="CanvasLayer" parent="HUD_Layer"]
 process_mode = 1
 
@@ -168,9 +215,28 @@ theme_override_font_sizes/font_size = 30
 text = "GAME OVER
 "
 
+[node name="Button" type="Button" parent="UI_Layer"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.459
+anchor_top = 0.341
+anchor_right = 0.562
+anchor_bottom = 0.444
+offset_left = 0.231995
+offset_top = 0.0319824
+offset_right = -0.424072
+offset_bottom = 0.287964
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 20
+text = "Restart"
+metadata/_edit_use_anchors_ = true
+
 [node name="GameOverSFX" type="AudioStreamPlayer2D" parent="."]
 process_mode = 2
 stream = ExtResource("6_21xkr")
 volume_db = -8.0
 
 [connection signal="timeout" from="GameLayer/HazardSpawner/SpawnerTimer" to="GameLayer/HazardSpawner" method="_on_timer_timeout"]
+[connection signal="pressed" from="UI_Layer/Button" to="." method="_on_button_pressed"]
